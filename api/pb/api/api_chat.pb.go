@@ -172,7 +172,7 @@ func (x *SendMessageReplyAck) GetOp() common.OP {
 }
 
 // AckSingleMsgReqeust 收到消息的确认请求
-type AckSingleMsgReqeust struct {
+type AckMessageReqeust struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -183,8 +183,8 @@ type AckSingleMsgReqeust struct {
 	Op    common.OP `protobuf:"varint,4,opt,name=op,proto3,enum=common.OP" json:"op,omitempty"`
 }
 
-func (x *AckSingleMsgReqeust) Reset() {
-	*x = AckSingleMsgReqeust{}
+func (x *AckMessageReqeust) Reset() {
+	*x = AckMessageReqeust{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_types_api_chat_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -192,13 +192,13 @@ func (x *AckSingleMsgReqeust) Reset() {
 	}
 }
 
-func (x *AckSingleMsgReqeust) String() string {
+func (x *AckMessageReqeust) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AckSingleMsgReqeust) ProtoMessage() {}
+func (*AckMessageReqeust) ProtoMessage() {}
 
-func (x *AckSingleMsgReqeust) ProtoReflect() protoreflect.Message {
+func (x *AckMessageReqeust) ProtoReflect() protoreflect.Message {
 	mi := &file_types_api_chat_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -210,33 +210,33 @@ func (x *AckSingleMsgReqeust) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AckSingleMsgReqeust.ProtoReflect.Descriptor instead.
-func (*AckSingleMsgReqeust) Descriptor() ([]byte, []int) {
+// Deprecated: Use AckMessageReqeust.ProtoReflect.Descriptor instead.
+func (*AckMessageReqeust) Descriptor() ([]byte, []int) {
 	return file_types_api_chat_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *AckSingleMsgReqeust) GetFrom() int64 {
+func (x *AckMessageReqeust) GetFrom() int64 {
 	if x != nil {
 		return x.From
 	}
 	return 0
 }
 
-func (x *AckSingleMsgReqeust) GetTo() int64 {
+func (x *AckMessageReqeust) GetTo() int64 {
 	if x != nil {
 		return x.To
 	}
 	return 0
 }
 
-func (x *AckSingleMsgReqeust) GetMsgId() int64 {
+func (x *AckMessageReqeust) GetMsgId() int64 {
 	if x != nil {
 		return x.MsgId
 	}
 	return 0
 }
 
-func (x *AckSingleMsgReqeust) GetOp() common.OP {
+func (x *AckMessageReqeust) GetOp() common.OP {
 	if x != nil {
 		return x.Op
 	}
@@ -244,7 +244,7 @@ func (x *AckSingleMsgReqeust) GetOp() common.OP {
 }
 
 // AckSingleMsgReplyAck 服务端确认收到
-type AckSingleMsgReplyAck struct {
+type AckMessageReplyAck struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -255,8 +255,8 @@ type AckSingleMsgReplyAck struct {
 	Op    common.OP `protobuf:"varint,4,opt,name=op,proto3,enum=common.OP" json:"op,omitempty"`
 }
 
-func (x *AckSingleMsgReplyAck) Reset() {
-	*x = AckSingleMsgReplyAck{}
+func (x *AckMessageReplyAck) Reset() {
+	*x = AckMessageReplyAck{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_types_api_chat_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -264,13 +264,13 @@ func (x *AckSingleMsgReplyAck) Reset() {
 	}
 }
 
-func (x *AckSingleMsgReplyAck) String() string {
+func (x *AckMessageReplyAck) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*AckSingleMsgReplyAck) ProtoMessage() {}
+func (*AckMessageReplyAck) ProtoMessage() {}
 
-func (x *AckSingleMsgReplyAck) ProtoReflect() protoreflect.Message {
+func (x *AckMessageReplyAck) ProtoReflect() protoreflect.Message {
 	mi := &file_types_api_chat_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -282,33 +282,33 @@ func (x *AckSingleMsgReplyAck) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use AckSingleMsgReplyAck.ProtoReflect.Descriptor instead.
-func (*AckSingleMsgReplyAck) Descriptor() ([]byte, []int) {
+// Deprecated: Use AckMessageReplyAck.ProtoReflect.Descriptor instead.
+func (*AckMessageReplyAck) Descriptor() ([]byte, []int) {
 	return file_types_api_chat_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *AckSingleMsgReplyAck) GetFrom() int64 {
+func (x *AckMessageReplyAck) GetFrom() int64 {
 	if x != nil {
 		return x.From
 	}
 	return 0
 }
 
-func (x *AckSingleMsgReplyAck) GetTo() int64 {
+func (x *AckMessageReplyAck) GetTo() int64 {
 	if x != nil {
 		return x.To
 	}
 	return 0
 }
 
-func (x *AckSingleMsgReplyAck) GetMsgId() int64 {
+func (x *AckMessageReplyAck) GetMsgId() int64 {
 	if x != nil {
 		return x.MsgId
 	}
 	return 0
 }
 
-func (x *AckSingleMsgReplyAck) GetOp() common.OP {
+func (x *AckMessageReplyAck) GetOp() common.OP {
 	if x != nil {
 		return x.Op
 	}
@@ -336,22 +336,21 @@ var file_types_api_chat_proto_rawDesc = []byte{
 	0x14, 0x0a, 0x05, 0x6d, 0x73, 0x67, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05,
 	0x6d, 0x73, 0x67, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x02, 0x6f, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28,
 	0x0e, 0x32, 0x0a, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x4f, 0x50, 0x52, 0x02, 0x6f,
-	0x70, 0x22, 0x6b, 0x0a, 0x13, 0x41, 0x63, 0x6b, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x4d, 0x73,
-	0x67, 0x52, 0x65, 0x71, 0x65, 0x75, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02,
-	0x74, 0x6f, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x14, 0x0a, 0x05,
-	0x6d, 0x73, 0x67, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x6d, 0x73, 0x67,
-	0x49, 0x64, 0x12, 0x1a, 0x0a, 0x02, 0x6f, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0a,
-	0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x4f, 0x50, 0x52, 0x02, 0x6f, 0x70, 0x22, 0x6c,
-	0x0a, 0x14, 0x41, 0x63, 0x6b, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x4d, 0x73, 0x67, 0x52, 0x65,
-	0x70, 0x6c, 0x79, 0x41, 0x63, 0x6b, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x01,
+	0x70, 0x22, 0x69, 0x0a, 0x11, 0x41, 0x63, 0x6b, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52,
+	0x65, 0x71, 0x65, 0x75, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x03, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f,
 	0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x14, 0x0a, 0x05, 0x6d, 0x73,
 	0x67, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x6d, 0x73, 0x67, 0x49, 0x64,
 	0x12, 0x1a, 0x0a, 0x02, 0x6f, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0a, 0x2e, 0x63,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x4f, 0x50, 0x52, 0x02, 0x6f, 0x70, 0x42, 0x0b, 0x5a, 0x09,
-	0x2e, 0x2e, 0x2f, 0x70, 0x62, 0x2f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x33,
+	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x4f, 0x50, 0x52, 0x02, 0x6f, 0x70, 0x22, 0x6a, 0x0a, 0x12,
+	0x41, 0x63, 0x6b, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x41,
+	0x63, 0x6b, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x03, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x14, 0x0a, 0x05, 0x6d, 0x73, 0x67, 0x49, 0x64, 0x18,
+	0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x05, 0x6d, 0x73, 0x67, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x02,
+	0x6f, 0x70, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0a, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f,
+	0x6e, 0x2e, 0x4f, 0x50, 0x52, 0x02, 0x6f, 0x70, 0x42, 0x0b, 0x5a, 0x09, 0x2e, 0x2e, 0x2f, 0x70,
+	0x62, 0x2f, 0x61, 0x70, 0x69, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -368,18 +367,18 @@ func file_types_api_chat_proto_rawDescGZIP() []byte {
 
 var file_types_api_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_types_api_chat_proto_goTypes = []interface{}{
-	(*SendMessageRequest)(nil),   // 0: api.SendMessageRequest
-	(*SendMessageReplyAck)(nil),  // 1: api.SendMessageReplyAck
-	(*AckSingleMsgReqeust)(nil),  // 2: api.AckSingleMsgReqeust
-	(*AckSingleMsgReplyAck)(nil), // 3: api.AckSingleMsgReplyAck
-	(common.PushType)(0),         // 4: common.PushType
-	(common.OP)(0),               // 5: common.OP
+	(*SendMessageRequest)(nil),  // 0: api.SendMessageRequest
+	(*SendMessageReplyAck)(nil), // 1: api.SendMessageReplyAck
+	(*AckMessageReqeust)(nil),   // 2: api.AckMessageReqeust
+	(*AckMessageReplyAck)(nil),  // 3: api.AckMessageReplyAck
+	(common.PushType)(0),        // 4: common.PushType
+	(common.OP)(0),              // 5: common.OP
 }
 var file_types_api_chat_proto_depIdxs = []int32{
 	4, // 0: api.SendMessageRequest.type:type_name -> common.PushType
 	5, // 1: api.SendMessageReplyAck.op:type_name -> common.OP
-	5, // 2: api.AckSingleMsgReqeust.op:type_name -> common.OP
-	5, // 3: api.AckSingleMsgReplyAck.op:type_name -> common.OP
+	5, // 2: api.AckMessageReqeust.op:type_name -> common.OP
+	5, // 3: api.AckMessageReplyAck.op:type_name -> common.OP
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
@@ -418,7 +417,7 @@ func file_types_api_chat_proto_init() {
 			}
 		}
 		file_types_api_chat_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AckSingleMsgReqeust); i {
+			switch v := v.(*AckMessageReqeust); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -430,7 +429,7 @@ func file_types_api_chat_proto_init() {
 			}
 		}
 		file_types_api_chat_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AckSingleMsgReplyAck); i {
+			switch v := v.(*AckMessageReplyAck); i {
 			case 0:
 				return &v.state
 			case 1:

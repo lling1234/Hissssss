@@ -28,7 +28,7 @@ service Api {
     };
   }
   // 对端确认收到消息
-  rpc AckSingleMsg (AckSingleMsgReqeust) returns (AckSingleMsgReplyAck) {
+  rpc AckMessage (AckMessageReqeust) returns (AckMessageReplyAck) {
     option (google.api.http) = {
       post: "/v1/api/chat/ack"
       body: "*"

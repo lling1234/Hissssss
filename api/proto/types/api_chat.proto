@@ -19,7 +19,7 @@ message SendMessageReplyAck {
 }
 
 // AckSingleMsgReqeust 收到消息的确认请求
-message AckSingleMsgReqeust {
+message AckMessageReqeust {
   int64 from = 1;
   int64 to = 2;
   int64 msgId = 3;
@@ -27,7 +27,7 @@ message AckSingleMsgReqeust {
 }
 
 // AckSingleMsgReplyAck 服务端确认收到
-message AckSingleMsgReplyAck {
+message AckMessageReplyAck {
   int64 from = 1;
   int64 to = 2;
   int64 msgId = 3;

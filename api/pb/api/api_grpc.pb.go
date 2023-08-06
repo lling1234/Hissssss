@@ -27,9 +27,9 @@ type ApiClient interface {
 	// 登录
 	SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.CallOption) (*SignInReply, error)
 	// 发送消息
-	SendSingle(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageReplyAck, error)
+	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageReplyAck, error)
 	// 对端确认收到消息
-	AckSingleMsg(ctx context.Context, in *AckSingleMsgReqeust, opts ...grpc.CallOption) (*AckSingleMsgReplyAck, error)
+	AckMessage(ctx context.Context, in *AckMessageReqeust, opts ...grpc.CallOption) (*AckMessageReplyAck, error)
 }
 
 type apiClient struct {
@@ -58,18 +58,18 @@ func (c *apiClient) SignIn(ctx context.Context, in *SignInRequest, opts ...grpc.
 	return out, nil
 }
 
-func (c *apiClient) SendSingle(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageReplyAck, error) {
+func (c *apiClient) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageReplyAck, error) {
 	out := new(SendMessageReplyAck)
-	err := c.cc.Invoke(ctx, "/api.Api/SendSingle", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/api.Api/SendMessage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *apiClient) AckSingleMsg(ctx context.Context, in *AckSingleMsgReqeust, opts ...grpc.CallOption) (*AckSingleMsgReplyAck, error) {
-	out := new(AckSingleMsgReplyAck)
-	err := c.cc.Invoke(ctx, "/api.Api/AckSingleMsg", in, out, opts...)
+func (c *apiClient) AckMessage(ctx context.Context, in *AckMessageReqeust, opts ...grpc.CallOption) (*AckMessageReplyAck, error) {
+	out := new(AckMessageReplyAck)
+	err := c.cc.Invoke(ctx, "/api.Api/AckMessage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -85,9 +85,9 @@ type ApiServer interface {
 	// 登录
 	SignIn(context.Context, *SignInRequest) (*SignInReply, error)
 	// 发送消息
-	SendSingle(context.Context, *SendMessageRequest) (*SendMessageReplyAck, error)
+	SendMessage(context.Context, *SendMessageRequest) (*SendMessageReplyAck, error)
 	// 对端确认收到消息
-	AckSingleMsg(context.Context, *AckSingleMsgReqeust) (*AckSingleMsgReplyAck, error)
+	AckMessage(context.Context, *AckMessageReqeust) (*AckMessageReplyAck, error)
 	mustEmbedUnimplementedApiServer()
 }
 
@@ -101,11 +101,11 @@ func (UnimplementedApiServer) SignUp(context.Context, *SignUpRequest) (*SignUpRe
 func (UnimplementedApiServer) SignIn(context.Context, *SignInRequest) (*SignInReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SignIn not implemented")
 }
-func (UnimplementedApiServer) SendSingle(context.Context, *SendMessageRequest) (*SendMessageReplyAck, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendSingle not implemented")
+func (UnimplementedApiServer) SendMessage(context.Context, *SendMessageRequest) (*SendMessageReplyAck, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
 }
-func (UnimplementedApiServer) AckSingleMsg(context.Context, *AckSingleMsgReqeust) (*AckSingleMsgReplyAck, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AckSingleMsg not implemented")
+func (UnimplementedApiServer) AckMessage(context.Context, *AckMessageReqeust) (*AckMessageReplyAck, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AckMessage not implemented")
 }
 func (UnimplementedApiServer) mustEmbedUnimplementedApiServer() {}
 
@@ -156,38 +156,38 @@ func _Api_SignIn_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Api_SendSingle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Api_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ApiServer).SendSingle(ctx, in)
+		return srv.(ApiServer).SendMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.Api/SendSingle",
+		FullMethod: "/api.Api/SendMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApiServer).SendSingle(ctx, req.(*SendMessageRequest))
+		return srv.(ApiServer).SendMessage(ctx, req.(*SendMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Api_AckSingleMsg_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AckSingleMsgReqeust)
+func _Api_AckMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AckMessageReqeust)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ApiServer).AckSingleMsg(ctx, in)
+		return srv.(ApiServer).AckMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/api.Api/AckSingleMsg",
+		FullMethod: "/api.Api/AckMessage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ApiServer).AckSingleMsg(ctx, req.(*AckSingleMsgReqeust))
+		return srv.(ApiServer).AckMessage(ctx, req.(*AckMessageReqeust))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -208,12 +208,12 @@ var Api_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Api_SignIn_Handler,
 		},
 		{
-			MethodName: "SendSingle",
-			Handler:    _Api_SendSingle_Handler,
+			MethodName: "SendMessage",
+			Handler:    _Api_SendMessage_Handler,
 		},
 		{
-			MethodName: "AckSingleMsg",
-			Handler:    _Api_AckSingleMsg_Handler,
+			MethodName: "AckMessage",
+			Handler:    _Api_AckMessage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
