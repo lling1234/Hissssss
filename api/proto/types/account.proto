@@ -1,0 +1,48 @@
+syntax = "proto3";
+package account;
+option go_package = "../pb/account";
+
+// 注册
+message SignUpRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message SignUpReply {
+  int64 code = 1;
+  string message = 2;
+}
+
+// 登录
+message SignInRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message SignInReply {
+  string token = 1;
+  string message = 2;
+  int64 code = 3;
+}
+
+
+// 连接
+message ConnectRequest {
+  int64 Uid = 1;
+  string ServerID = 2;
+}
+
+message ConnectReply {
+  int64 Code = 1;
+  string Message = 2;
+}
+
+// 断开连接
+message DisConnectRequest {
+  int64 Uid = 1;
+}
+
+message DisConnectReply {
+  int64 Code = 1;
+  string Message = 2;
+}

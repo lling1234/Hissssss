@@ -1,0 +1,11 @@
+syntax = "proto3";
+package account;
+option go_package = "../pb/account";
+import "types/account.proto";
+
+service Account {
+  rpc SignUp (SignUpRequest) returns (SignUpReply) {}
+  rpc SignIn (SignInRequest) returns (SignInReply) {}
+  rpc Connect (ConnectRequest) returns (ConnectReply) {}
+  rpc DisConnect (DisConnectRequest) returns (DisConnectReply) {}
+}

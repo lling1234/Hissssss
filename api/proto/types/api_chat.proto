@@ -1,0 +1,35 @@
+syntax = "proto3";
+package api;
+option go_package = "../pb/api";
+import "common.proto";
+
+message SendMessageRequest {
+  int64 from = 1;                   // 发送者
+  int64 to = 2;                     // 接收者
+  int64 room = 3;                   // 房间接收
+  string body = 4;                  // 消息体
+  common.PushType type = 5;         // 发送类型
+}
+
+message SendMessageReplyAck {
+  int64 code = 1;
+  string msg = 2;
+  int64 msgId = 3;                  // 消息id 返回双方的对话的全局消息id
+  common.OP op = 4;                 // 消息动作 确认动作, 服务器确认已经收到消息, 正在处理中
+}
+
+// AckSingleMsgReqeust 收到消息的确认请求
+message AckSingleMsgReqeust {
+  int64 from = 1;
+  int64 to = 2;
+  int64 msgId = 3;
+  common.OP op = 4;
+}
+
+// AckSingleMsgReplyAck 服务端确认收到
+message AckSingleMsgReplyAck {
+  int64 from = 1;
+  int64 to = 2;
+  int64 msgId = 3;
+  common.OP op = 4;
+}

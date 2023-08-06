@@ -1,0 +1,38 @@
+syntax = "proto3";
+package api;
+option go_package = "../pb/api";
+import "google/api/annotations.proto";
+import "types/api_account.proto";
+import "types/api_chat.proto";
+
+service Api {
+  // 注册
+  rpc SignUp (SignUpRequest) returns (SignUpReply) {
+    option (google.api.http) = {
+      post: "/v1/api/account/signup"
+      body: "*"
+    };
+  }
+  // 登录
+  rpc SignIn (SignInRequest) returns (SignInReply) {
+    option (google.api.http) = {
+      post: "/v1/api/account/signin"
+      body: "*"
+    };
+  }
+  // 发送消息
+  rpc SendMessage (SendMessageRequest) returns (SendMessageReplyAck) {
+    option (google.api.http) = {
+      post: "/v1/api/chat/message"
+      body: "*"
+    };
+  }
+  // 对端确认收到消息
+  rpc AckSingleMsg (AckSingleMsgReqeust) returns (AckSingleMsgReplyAck) {
+    option (google.api.http) = {
+      post: "/v1/api/chat/ack"
+      body: "*"
+    };
+  }
+}
+

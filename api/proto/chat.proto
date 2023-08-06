@@ -1,0 +1,10 @@
+syntax = "proto3";
+package chat;
+option go_package = "../pb/chat";
+import "types/chat.proto";
+
+service Chat {
+  rpc Push (SendMessageRequest) returns (SendMessageReply) {}
+  rpc PushRoom (SendMessageRequest) returns (SendMessageReply) {}
+  rpc Broadcast (SendMessageRequest) returns (SendMessageReply) {}
+}

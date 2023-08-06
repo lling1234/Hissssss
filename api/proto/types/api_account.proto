@@ -1,0 +1,26 @@
+syntax = "proto3";
+package api;
+option go_package = "../pb/api";
+
+// 注册
+message SignUpRequest {
+  string username = 1;    // 用户名
+  string password = 2;    // 密码
+}
+
+message SignUpReply {
+  int64 code = 1;
+  string message = 2;
+}
+
+// 登录
+message SignInRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message SignInReply {
+  string token = 1;
+  string message = 2;
+  int64 code = 3;
+}

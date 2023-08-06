@@ -1,0 +1,30 @@
+syntax = "proto3";
+package chat;
+option go_package = "../pb/chat";
+import "common.proto";
+
+message SendMessageRequest {
+  int64 from = 1;             // 发送者
+  int64 to = 2;               // 接收者
+  int64 room = 3;             // 房间接收
+  string body = 4;            // 消息体
+  common.PushType type = 5;   // 发送类型
+}
+
+message SendMessageReply {
+  int64 code = 1;
+  string msg = 2;
+  int64 msg_id = 3;
+  common.OP op = 4;
+}
+
+// Message To Rabbitmq
+message MessageToMQ {
+  int64 seq = 1;             // 消息序号
+  string server = 2;         // 服务器
+  int64 room = 3;            // 房间号
+  int64 from = 4;            // 发送者
+  int64 to = 5;              // 接收者
+  string body = 6;           // 消息体
+  common.PushType type = 7;  // 发送类型
+}

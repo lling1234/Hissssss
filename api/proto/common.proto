@@ -1,0 +1,74 @@
+syntax = "proto3";
+package common;
+option go_package = "github.com/cd-home/Hissssss/api/pb/common";
+
+enum Gender {
+  UnKnown_0 = 0;
+  Woman = 1;
+  Man = 2;
+}
+
+enum State {
+  UnKnown_1 = 0;
+  Disable = 1;
+  Enable = 2;
+  LogOffing = 3;
+  LogOffed = 4;
+}
+
+enum Bind {
+  UnKnown_2 = 0;
+  Unbound = 1;
+  Binding = 2;
+}
+
+enum SignupWay {
+  UnKnown_3 = 0;
+  Username = 1;
+  PhoneNumber = 2;
+  Email = 3;
+}
+
+enum Platform {
+  UnKnown_4 = 0;
+  Web = 1;
+  Ios = 2;
+  Android = 3;
+}
+
+enum Vip {
+  UnKnown_5 = 0;
+  NoVip = 1;
+  IsVip = 2;
+}
+
+enum OAuthType {
+  UnKnown_6 = 0;
+  WeChat = 1;
+  GitHub = 2;
+  Google = 3;
+  Weibo = 4;
+  QQ = 5;
+}
+
+enum PushType {
+  UnKnown_7 = 0;       // 未知
+  Single = 1;          // 单聊
+  Room = 2;            // 房间
+  Broadcast = 3;       // 广播
+}
+
+enum Message {
+    UnKnown_8 = 0;
+    Push = 1;
+    Reply = 2;
+    HeartBeat = 3;
+    HeartBeatReply = 4;
+}
+
+enum OP {
+  UnKnown_9 = 0;
+  REQ = 1; // 请求消息, 主动请求
+  ACK = 2; // 确认消息, 被动应答
+  NOTIFY = 3; // 服务端主动通知消息
+}

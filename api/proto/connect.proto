@@ -1,0 +1,8 @@
+syntax = "proto3";
+package connect;
+option go_package = "../pb/connect";
+import "types/connect.proto";
+
+service PushMessage {
+  rpc Push (Message) returns (MessageReply) {}
+}
