@@ -1,18 +1,18 @@
 package biz
 
 import (
-	"github.com/cd-home/Hissssss/internal/app/job/config"
 	"github.com/cd-home/Hissssss/internal/app/job/internal/adapter"
+	"github.com/cd-home/Hissssss/internal/pkg/config/queue"
 	"go.uber.org/zap"
 )
 
 type JobBiz struct {
 	logger *zap.Logger
-	queue  config.Queue
+	queue  queue.Config
 	mq     adapter.ChatMQ
 }
 
-func NewJobBiz(logger *zap.Logger, queue config.Queue, mq adapter.ChatMQ) *JobBiz {
+func NewJobBiz(logger *zap.Logger, queue queue.Config, mq adapter.ChatMQ) *JobBiz {
 	j := &JobBiz{
 		logger: logger,
 		queue:  queue,

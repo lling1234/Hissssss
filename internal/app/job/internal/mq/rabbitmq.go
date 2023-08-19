@@ -4,19 +4,19 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/cd-home/Hissssss/api/pb/chat"
-	"github.com/cd-home/Hissssss/internal/app/job/config"
 	"github.com/cd-home/Hissssss/internal/app/job/internal/adapter"
+	"github.com/cd-home/Hissssss/internal/pkg/config/queue"
 	"github.com/cd-home/Hissssss/internal/pkg/mq"
 	"go.uber.org/zap"
 )
 
 type RabbitMQ struct {
 	logger *zap.Logger
-	queue  config.Queue
+	queue  queue.Config
 	mq     *mq.RabbitMQ
 }
 
-func NewRabbitMQ(queue config.Queue, logger *zap.Logger, mq *mq.RabbitMQ) adapter.ChatMQ {
+func NewRabbitMQ(queue queue.Config, logger *zap.Logger, mq *mq.RabbitMQ) adapter.ChatMQ {
 	mq.SetUp(queue.Single, queue.Room, queue.Broadcast)
 	return &RabbitMQ{
 		queue:  queue,

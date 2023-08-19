@@ -4,17 +4,17 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/cd-home/Hissssss/api/pb/chat"
-	"github.com/cd-home/Hissssss/internal/app/logic/chat/config"
 	"github.com/cd-home/Hissssss/internal/app/logic/chat/internal/adapter"
+	"github.com/cd-home/Hissssss/internal/pkg/config/queue"
 	"github.com/cd-home/Hissssss/internal/pkg/mq"
 )
 
 type RabbitMQ struct {
-	Queue config.Queue
+	Queue queue.Config
 	mq    *mq.RabbitMQ
 }
 
-func NewRabbitMQ(queue config.Queue, mq *mq.RabbitMQ) adapter.ChatMQ {
+func NewRabbitMQ(queue queue.Config, mq *mq.RabbitMQ) adapter.ChatMQ {
 	mq.SetUp(queue.Single, queue.Room, queue.Broadcast)
 	r := &RabbitMQ{mq: mq, Queue: queue}
 	return r
