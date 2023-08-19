@@ -3,21 +3,21 @@ package biz
 import (
 	"context"
 	"github.com/cd-home/Hissssss/api/pb/chat"
-	"github.com/cd-home/Hissssss/internal/app/logic/chat/config"
 	"github.com/cd-home/Hissssss/internal/app/logic/chat/internal/adapter"
+	"github.com/cd-home/Hissssss/internal/pkg/config/queue"
 	"github.com/cd-home/Hissssss/internal/pkg/key"
 	"go.uber.org/zap"
 )
 
 type ChatBiz struct {
 	logger *zap.Logger
-	queue  config.Queue
+	queue  queue.Config
 	repo   adapter.ChatRepo
 	mq     adapter.ChatMQ
 	cache  adapter.ChatCache
 }
 
-func NewChatBiz(logger *zap.Logger, queue config.Queue, repo adapter.ChatRepo, mq adapter.ChatMQ,
+func NewChatBiz(logger *zap.Logger, queue queue.Config, repo adapter.ChatRepo, mq adapter.ChatMQ,
 	cache adapter.ChatCache) adapter.ChatBiz {
 	return &ChatBiz{
 		logger: logger.WithOptions(zap.Fields(zap.String("module", "chat biz"))),

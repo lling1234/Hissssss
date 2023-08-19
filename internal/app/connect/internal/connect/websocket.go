@@ -16,7 +16,7 @@ import (
 )
 
 type Websocket struct {
-	ID      string
+	NodeID  string
 	SnowID  *snowflake.Node
 	config  config.Config
 	Logger  *zap.Logger
@@ -26,8 +26,8 @@ type Websocket struct {
 
 func New(config config.Config, logger *zap.Logger, account account.AccountClient) *Websocket {
 	c := &Websocket{}
-	c.ID = config.Spec.Node.ID
-	node, _ := strconv.ParseInt(c.ID, 10, 64)
+	c.NodeID = config.Spec.Node.ID
+	node, _ := strconv.ParseInt(c.NodeID, 10, 64)
 	c.SnowID, _ = snowflake.NewNode(node % 30)
 	c.config = config
 	c.Logger = logger.WithOptions(zap.Fields(zap.String("module", "websocket")))
@@ -63,7 +63,7 @@ func (w *Websocket) InitWebSocket(ctx context.Context) error {
 		b := w.BucketX(uid)
 		b.JoinC(uid, ch)
 		// 建立连接信息,主要是映射 uid:server_id;
-		w.Connect(uid, w.ID)
+		w.Connect(uid, w.NodeID)
 		w.Logger.Info("[新建连接]", zap.Any("uid", ch.UID))
 		go w.Read(context.Background(), ch)
 		go w.Write(context.Background(), ch)
