@@ -69,7 +69,7 @@ func (c *Connect) Dispatch(pushCh chan *connect.Message, roomCh chan *connect.Me
 		select {
 		case singleMsg := <-pushCh:
 			_, err := c.client.Push(context.Background(), &connect.Message{
-				Seq:    singleMsg.Seq,
+				MsgId:  singleMsg.MsgId,
 				Server: singleMsg.Server,
 				Room:   singleMsg.Room,
 				From:   singleMsg.From,

@@ -4,7 +4,7 @@ option go_package = "../pb/connect";
 import "common.proto";
 
 message Message {
-  int64 seq = 1;               // 消息序号
+  int64 msgId = 1;               // 消息序号
   string server = 2;           // 服务器
   string room = 3;             // 房间号
   int64 from = 4;              // 发送者

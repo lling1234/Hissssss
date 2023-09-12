@@ -42,7 +42,7 @@ func (m *Message) Push(ctx context.Context, req *connect.Message) (*connect.Mess
 	to.From = req.From
 	to.Body = req.Body
 	to.Op = req.Op
-	to.MsgId = req.Seq // TODO 后续统一msgId与seq
+	to.MsgId = req.MsgId
 	data, _ := json.Marshal(to)
 	switch req.Type {
 	case common.PushType_Single:

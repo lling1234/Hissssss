@@ -130,7 +130,7 @@ func (j *Job) Push(msg *chat.MessageToMQ) error {
 	c, ok := j.connect[msg.Server]
 	if ok {
 		push := &connectx.Message{
-			Seq:    msg.Seq,
+			MsgId:  msg.MsgId,
 			Server: msg.Server,
 			From:   msg.From,
 			To:     msg.To,

@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	epoch = int64(1685086756604)
+	epoch = int64(1694519782066)
 
 	nodeIDBits = uint(5)
 	maxNodeID  = -1 ^ (int64(-1) << nodeIDBits)
