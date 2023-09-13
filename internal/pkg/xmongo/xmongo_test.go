@@ -1,7 +1,6 @@
 package xmongo
 
 import (
-	"go.mongodb.org/mongo-driver/mongo"
 	"testing"
 )
 
@@ -80,7 +79,7 @@ func TestXMongo_SessionModel(t *testing.T) {
 		Pwd:  "mongo",
 		DB:   []string{"test"},
 	})
-	err := mgo.SessionModel().WithSession(func(session mongo.SessionContext) error {
+	err := mgo.SessionModel().WithSession(func(session SessionContext) error {
 		err := mgo.InsertModel("test", "api").
 			Session(session).Multi(false).Doc(map[string]any{"router": "/a"}).Do()
 		if err != nil {
@@ -105,13 +104,13 @@ func TestXMongo_SessionModel2(t *testing.T) {
 		Pwd:  "mongo",
 		DB:   []string{"test"},
 	})
-	err := mgo.SessionModel().WithTransaction(func(session mongo.SessionContext) error {
-		err := mgo.InsertModel("test", "api2").
-			Session(session).Multi(false).Doc(map[string]any{"router": "/f"}).Do()
+	err := mgo.SessionModel().WithTransaction(func(session SessionContext) error {
+		err := mgo.InsertModel("test", "api").
+			Session(session).Multi(false).Doc(map[string]any{"router": "/a"}).Do()
 		if err != nil {
 			return err
 		}
-		err = mgo.DeleteModel("test", "api").Session(session).Multi(false).Filter(map[string]any{"router": "/f"}).Do()
+		err = mgo.DeleteModel("test", "api2").Session(session).Multi(false).Filter(map[string]any{"router": "/f"}).Do()
 		if err != nil {
 			return err
 		}

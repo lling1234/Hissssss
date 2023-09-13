@@ -14,6 +14,10 @@ type SessionModel struct {
 	opts     []*options.SessionOptions
 }
 
+type SessionContext interface {
+	mongo.SessionContext
+}
+
 func (x *XMongo) SessionModel() *SessionModel {
 	return &SessionModel{
 		ctx:      context.TODO(),
@@ -28,7 +32,7 @@ func (s *SessionModel) Opts(opts ...*options.SessionOptions) *SessionModel {
 	return s
 }
 
-func (s *SessionModel) WithSession(f func(session mongo.SessionContext) error) error {
+func (s *SessionModel) WithSession(f func(session SessionContext) error) error {
 	session, _ := s.client.StartSession(s.opts...)
 	defer session.EndSession(s.ctx)
 	err := mongo.WithSession(s.ctx, session, func(sessionContext mongo.SessionContext) error {
@@ -46,7 +50,7 @@ func (s *SessionModel) WithSession(f func(session mongo.SessionContext) error) e
 	return err
 }
 
-func (s *SessionModel) WithTransaction(f func(session mongo.SessionContext) error) error {
+func (s *SessionModel) WithTransaction(f func(session SessionContext) error) error {
 	session, _ := s.client.StartSession(s.opts...)
 	defer session.EndSession(s.ctx)
 	_, err := session.WithTransaction(s.ctx, func(ctx mongo.SessionContext) (interface{}, error) {
