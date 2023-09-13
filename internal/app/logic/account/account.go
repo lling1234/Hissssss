@@ -36,7 +36,7 @@ func main() {
 		fx.Provide(logger.New),
 		fx.Provide(etcdv3.New),
 		fx.Provide(xgorm.New),
-		fx.Provide(cache.NewRedis),
+		fx.Provide(cache.New),
 		fx.Provide(repo.NewAccountRepo),
 		fx.Provide(cacheBiz.NewAccountCache),
 		fx.Provide(biz.NewAccountBiz),

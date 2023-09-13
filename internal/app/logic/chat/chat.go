@@ -36,7 +36,7 @@ func main() {
 		fx.Supply(c, c.Spec.Etcd, c.Spec.Logger, c.Spec.Redis, c.Spec.RabbitMQ, c.Spec.Queue, c.Spec.Mysql),
 		fx.Supply(snow),
 		fx.Provide(logger.New),
-		fx.Provide(cache.NewRedis),
+		fx.Provide(cache.New),
 		fx.Provide(etcdv3.New),
 		fx.Provide(naming.New),
 		fx.Provide(chatMQ.NewRabbitMQ),

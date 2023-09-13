@@ -26,7 +26,7 @@ func main() {
 		fx.Provide(logger.New),
 		fx.Provide(etcdv3.New),
 		fx.Provide(mq.New),
-		fx.Provide(cache.NewRedis),
+		fx.Provide(cache.New),
 		fx.Provide(chatMQ.NewRabbitMQ),
 		fx.Provide(cacheBiz.NewJobCache),
 		fx.Provide(biz.NewJobBiz),
