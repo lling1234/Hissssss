@@ -7,11 +7,11 @@ import (
 
 // OfflineMessage 离线消息表存储mongo
 type OfflineMessage struct {
-	MsgId    int64           `bson:"column:MsgId"`
-	MsgType  common.PushType `bson:"column:MsgType"`
-	Sender   int64           `bson:"column:Sender"`
-	Receiver int64           `bson:"column:Receiver"`
-	SendTime time.Time       `bson:"column:SendTime"`
-	Received time.Time       `bson:"column:ReceiveTime"`
-	Receive  bool            `bson:"column:Received"`
+	MsgId    int64           `bson:"MsgId"`
+	MsgType  common.PushType `bson:"MsgType"`
+	From     int64           `bson:"From"`
+	To       int64           `bson:"To"`
+	SendTime time.Time       `bson:"SendTime"`
+	Received time.Time       `bson:"ReceiveTime"`
+	Receive  bool            `bson:"Received"`
 }

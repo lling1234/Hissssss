@@ -9,6 +9,7 @@ import (
 	"github.com/cd-home/Hissssss/internal/app/job/internal/adapter"
 	"github.com/cd-home/Hissssss/internal/app/job/internal/biz"
 	"github.com/cd-home/Hissssss/internal/app/job/internal/connect"
+	"github.com/cd-home/Hissssss/internal/app/job/internal/model"
 	"github.com/cd-home/Hissssss/internal/pkg/key"
 	"go.etcd.io/etcd/client/v3"
 	"go.etcd.io/etcd/client/v3/naming/endpoints"
@@ -27,10 +28,11 @@ type Job struct {
 	biz        *biz.JobBiz
 	mq         adapter.ChatMQ
 	cache      adapter.JobCache
+	repo       adapter.JobRepo
 }
 
 func New(c config.Config, logger *zap.Logger, etcdClient *clientv3.Client,
-	biz *biz.JobBiz, mq adapter.ChatMQ, cache adapter.JobCache) {
+	biz *biz.JobBiz, mq adapter.ChatMQ, cache adapter.JobCache, repo adapter.JobRepo) {
 	j := &Job{
 		logger:     logger.WithOptions(zap.Fields(zap.String("module", "job server"))),
 		config:     c,
@@ -39,6 +41,7 @@ func New(c config.Config, logger *zap.Logger, etcdClient *clientv3.Client,
 		biz:        biz,
 		mq:         mq,
 		cache:      cache,
+		repo:       repo,
 	}
 	// 监听链接层
 	go j.watchConnect("connect")
@@ -125,7 +128,14 @@ func (j *Job) Push(msg *chat.MessageToMQ) error {
 	msg.Server, _ = j.cache.GetServerByUID(key.GenUidMappingServer(msg.To))
 	if len(msg.Server) == 0 {
 		// 写入离线消息表
-		return nil
+		return j.repo.CreateOfflineMessage(&model.OfflineMessage{
+			MsgId:    msg.MsgId,
+			MsgType:  msg.Type,
+			From:     msg.From,
+			To:       msg.To,
+			SendTime: time.Now().Add(time.Hour * 8),
+			Receive:  false,
+		})
 	}
 	c, ok := j.connect[msg.Server]
 	if ok {
