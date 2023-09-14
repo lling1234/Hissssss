@@ -13,7 +13,7 @@ import (
 )
 
 func TestGrpcServer(t *testing.T) {
-	client := etcdv3.New(etcdv3.Config{Addr: []string{"10.211.55.18:2379"}})
+	client := etcdv3.New(etcdv3.Config{Addr: []string{"10.211.55.19:2379"}})
 	etcdResolverBuilder, err := resolver.NewBuilder(client)
 	if err != nil {
 		t.Log(err)

@@ -14,7 +14,6 @@ import (
 	"github.com/cd-home/Hissssss/internal/pkg/mq"
 	"github.com/cd-home/Hissssss/internal/pkg/naming"
 	"github.com/cd-home/Hissssss/internal/pkg/tool/snowid"
-	"github.com/cd-home/Hissssss/internal/pkg/xgorm"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
@@ -33,7 +32,7 @@ func main() {
 	}
 	app := fx.Module(
 		"chat",
-		fx.Supply(c, c.Spec.Etcd, c.Spec.Logger, c.Spec.Redis, c.Spec.RabbitMQ, c.Spec.Queue, c.Spec.Mysql),
+		fx.Supply(c, c.Spec.Etcd, c.Spec.Logger, c.Spec.Redis, c.Spec.RabbitMQ, c.Spec.Queue),
 		fx.Supply(snow),
 		fx.Provide(logger.New),
 		fx.Provide(cache.New),
@@ -41,7 +40,6 @@ func main() {
 		fx.Provide(naming.New),
 		fx.Provide(chatMQ.NewRabbitMQ),
 		fx.Provide(mq.New),
-		fx.Provide(xgorm.New),
 		fx.Provide(repo.NewChatRepo),
 		fx.Provide(cacheBiz.NewChatCache),
 		fx.Provide(biz.NewChatBiz),

@@ -6,7 +6,7 @@ import (
 
 func TestXMongo_InsertModel(t *testing.T) {
 	mgo := New(Config{
-		Host: "10.211.55.18",
+		Host: "10.211.55.19",
 		Port: "27017",
 		User: "mongo",
 		Pwd:  "mongo",
@@ -21,7 +21,7 @@ func TestXMongo_InsertModel(t *testing.T) {
 
 func TestXMongo_UpdateModel(t *testing.T) {
 	mgo := New(Config{
-		Host: "10.211.55.18",
+		Host: "10.211.55.19",
 		Port: "27017",
 		User: "mongo",
 		Pwd:  "mongo",
@@ -37,7 +37,7 @@ func TestXMongo_UpdateModel(t *testing.T) {
 
 func TestXMongo_DeleteModel(t *testing.T) {
 	mgo := New(Config{
-		Host: "10.211.55.18",
+		Host: "10.211.55.19",
 		Port: "27017",
 		User: "mongo",
 		Pwd:  "mongo",
@@ -52,7 +52,7 @@ func TestXMongo_DeleteModel(t *testing.T) {
 
 func TestXMongo_SelectModel(t *testing.T) {
 	mgo := New(Config{
-		Host: "10.211.55.18",
+		Host: "10.211.55.19",
 		Port: "27017",
 		User: "mongo",
 		Pwd:  "mongo",
@@ -73,7 +73,7 @@ func TestXMongo_SelectModel(t *testing.T) {
 
 func TestXMongo_SessionModel(t *testing.T) {
 	mgo := New(Config{
-		Host: "10.211.55.18",
+		Host: "10.211.55.19",
 		Port: "27017",
 		User: "mongo",
 		Pwd:  "mongo",
@@ -98,7 +98,7 @@ func TestXMongo_SessionModel(t *testing.T) {
 
 func TestXMongo_SessionModel2(t *testing.T) {
 	mgo := New(Config{
-		Host: "10.211.55.18",
+		Host: "10.211.55.19",
 		Port: "27017",
 		User: "mongo",
 		Pwd:  "mongo",

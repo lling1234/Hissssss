@@ -25,7 +25,7 @@ type XMongo struct {
 }
 
 func New(config Config) *XMongo {
-	dns := fmt.Sprintf("mongodb://%s:%s@%s:%s/?authSource=admin", config.User, config.Pwd, config.Host, config.Port)
+	dns := fmt.Sprintf("mongodb://%s:%s@%s:%s/?connect=direct&authSource=admin", config.User, config.Pwd, config.Host, config.Port)
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(dns))
