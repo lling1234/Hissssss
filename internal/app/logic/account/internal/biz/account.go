@@ -6,6 +6,7 @@ import (
 	"github.com/cd-home/Hissssss/api/pb/common"
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/adapter"
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/pkg/model"
+	"github.com/cd-home/Hissssss/internal/pkg/code"
 	"github.com/cd-home/Hissssss/internal/pkg/jwt"
 	"go.uber.org/zap"
 )
@@ -28,11 +29,21 @@ func NewAccountBiz(logger *zap.Logger, repo adapter.AccountRepo, cache adapter.A
 
 func (ab *AccountBiz) SignUp(name string, password string, way common.SignupWay, platform common.Platform) error {
 	ab.logger.Debug("[signup]: ", zap.String("name", name))
-	return ab.repo.Create(&model.User{
+	_, ok, err := ab.repo.Retrieve(name)
+	if err != nil {
+		return code.Rsp(code.InternalError)
+	}
+	if ok {
+		return code.Rsp(code.NameAlreadyExists)
+	}
+	if ab.repo.Create(&model.User{
 		Name:      name,
 		Password:  password,
 		SignupWay: way,
-	})
+	}); err != nil {
+		return code.Rsp(code.InternalError)
+	}
+	return nil
 }
 
 func (ab *AccountBiz) SignIn(name string, pwd string) (string, error) {

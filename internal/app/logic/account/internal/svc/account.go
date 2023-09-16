@@ -5,6 +5,7 @@ import (
 	"github.com/cd-home/Hissssss/api/pb/account"
 	"github.com/cd-home/Hissssss/api/pb/common"
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/adapter"
+	"github.com/cd-home/Hissssss/internal/pkg/code"
 	"go.uber.org/zap"
 )
 
@@ -28,8 +29,8 @@ func (a *Account) SignUp(ctx context.Context, req *account.SignUpRequest) (*acco
 		return nil, err
 	}
 	return &account.SignUpReply{
-		Code:    200,
-		Message: "OK",
+		Code:    code.SignUpSuccess,
+		Message: code.Message[code.SignUpSuccess],
 	}, nil
 }
 

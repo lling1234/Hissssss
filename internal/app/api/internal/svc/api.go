@@ -5,6 +5,7 @@ import (
 	"github.com/cd-home/Hissssss/api/pb/account"
 	"github.com/cd-home/Hissssss/api/pb/api"
 	"github.com/cd-home/Hissssss/api/pb/chat"
+	"github.com/cd-home/Hissssss/internal/pkg/code"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -31,8 +32,9 @@ func (a *Api) SignUp(ctx context.Context, req *api.SignUpRequest) (*api.SignUpRe
 		Password: req.Password,
 	})
 	if err != nil {
-		a.logger.Error("signup err", zap.Error(err))
-		return &api.SignUpReply{Code: 500, Message: "注册失败, 请重试."}, nil
+		codex, message := code.From(err)
+		a.logger.Error("signup err", zap.Int64("code", codex), zap.String("message", message))
+		return &api.SignUpReply{Code: codex, Message: message}, nil
 	}
 	return &api.SignUpReply{Code: reply.Code, Message: reply.Message}, nil
 }
