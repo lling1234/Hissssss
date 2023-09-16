@@ -36,9 +36,9 @@ func (a *AccountRepo) Create(doc *model.User) error {
 func (a *AccountRepo) Retrieve(name string) (*model.User, bool, error) {
 	var u model.User
 	selectx := a.mongo.SelectModel(AccountDatabase, User)
-	err := selectx.Multi(false).Filter(map[string]any{"name": name}).Rows(&u).Do()
+	err := selectx.Multi(false).Filter(map[string]any{"Name": name}).Rows(&u).Do()
 	if err != nil && !errors.Is(err, mongo.ErrNoDocuments) {
 		return nil, false, err
 	}
-	return &u, true, nil
+	return &u, u.ID > 0, nil
 }

@@ -39,9 +39,9 @@ func (a *Account) SignIn(ctx context.Context, req *account.SignInRequest) (*acco
 	token, err := a.biz.SignIn(req.Username, req.Password)
 	if err != nil {
 		a.logger.Warn(err.Error())
-		return &account.SignInReply{Code: 500, Message: err.Error()}, nil
+		return nil, err
 	}
-	return &account.SignInReply{Code: 200, Message: "success", Token: token}, nil
+	return &account.SignInReply{Code: code.SignInSuccess, Message: code.Message[code.SignInSuccess], Token: token}, nil
 }
 
 // Connect 连接信息

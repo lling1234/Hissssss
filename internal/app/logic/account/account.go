@@ -59,6 +59,7 @@ func init() {
 	vp.SetConfigName("account")
 	vp.AddConfigPath("etc")
 	vp.AddConfigPath("../etc")
+	vp.AddConfigPath("internal/app/logic/account/etc")
 	vp.SetEnvPrefix("ACCOUNT")
 	vp.AutomaticEnv()
 	if err = vp.ReadInConfig(); err != nil {

@@ -45,7 +45,9 @@ func (a *Api) SignIn(ctx context.Context, req *api.SignInRequest) (*api.SignInRe
 		Password: req.Password,
 	})
 	if err != nil {
-		return &api.SignInReply{Code: 500, Message: err.Error()}, nil
+		codex, message := code.From(err)
+		a.logger.Error("signin err", zap.Int64("code", codex), zap.String("message", message))
+		return &api.SignInReply{Code: codex, Message: message}, nil
 	}
 	return &api.SignInReply{Token: reply.Token, Message: reply.Message, Code: reply.Code}, nil
 }

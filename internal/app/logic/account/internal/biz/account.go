@@ -2,7 +2,6 @@ package biz
 
 import (
 	"context"
-	"errors"
 	"github.com/cd-home/Hissssss/api/pb/common"
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/adapter"
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/pkg/model"
@@ -36,7 +35,7 @@ func (ab *AccountBiz) SignUp(name string, password string, way common.SignupWay,
 	if ok {
 		return code.Rsp(code.NameAlreadyExists)
 	}
-	if ab.repo.Create(&model.User{
+	if err = ab.repo.Create(&model.User{
 		Name:      name,
 		Password:  password,
 		SignupWay: way,
@@ -57,13 +56,13 @@ func (ab *AccountBiz) SignIn(name string, pwd string) (string, error) {
 func (ab *AccountBiz) Authenticate(name string, password string) (int64, error) {
 	doc, ok, err := ab.repo.Retrieve(name)
 	if err != nil {
-		return 0, err
+		return 0, code.Rsp(code.InternalError)
 	}
 	if !ok {
-		return 0, errors.New("用户不存在")
+		return 0, code.Rsp(code.UserNotExists)
 	}
 	if !doc.Verify(password) {
-		return 0, errors.New("密码验证不通过")
+		return 0, code.Rsp(code.PasswordWrong)
 	}
 	return doc.ID, nil
 }
