@@ -4,33 +4,40 @@ import (
 	"errors"
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/adapter"
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/pkg/model"
+	"github.com/cd-home/Hissssss/internal/pkg/xmongo"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"
-	"gorm.io/gorm"
+)
+
+const (
+	AccountDatabase = "Account"
+	User            = "User"
 )
 
 type AccountRepo struct {
 	logger *zap.Logger
-	db     *gorm.DB
+	mongo  *xmongo.XMongo
 }
 
-func NewAccountRepo(logger *zap.Logger, db *gorm.DB) adapter.AccountRepo {
+func NewAccountRepo(logger *zap.Logger, mongo *xmongo.XMongo) adapter.AccountRepo {
 	return &AccountRepo{
 		logger: logger.WithOptions(zap.Fields(zap.String("module", "account repo"))),
-		db:     db,
+		mongo:  mongo,
 	}
 }
 
-func (a *AccountRepo) Create(user *model.User) error {
-	return a.db.Create(user).Error
+func (a *AccountRepo) Create(doc *model.User) error {
+	insert := a.mongo.InsertModel(AccountDatabase, User)
+	doc.ID = insert.Unique()
+	doc.CreatHook().Encrypt(doc.Password)
+	return insert.Multi(false).Doc(doc).Do()
 }
 
 func (a *AccountRepo) Retrieve(name string) (*model.User, bool, error) {
 	var u model.User
-	err := a.db.First(&u, "username = ?", name).Error
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return nil, false, nil
-	}
-	if err != nil {
+	selectx := a.mongo.SelectModel(AccountDatabase, User)
+	err := selectx.Multi(false).Filter(map[string]any{"name": name}).Rows(&u).Do()
+	if err != nil && !errors.Is(err, mongo.ErrNoDocuments) {
 		return nil, false, err
 	}
 	return &u, true, nil

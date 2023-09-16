@@ -7,7 +7,6 @@ import (
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/adapter"
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/pkg/model"
 	"github.com/cd-home/Hissssss/internal/pkg/jwt"
-	"github.com/cd-home/Hissssss/internal/pkg/tool/bcrypt/pwd"
 	"go.uber.org/zap"
 )
 
@@ -29,10 +28,9 @@ func NewAccountBiz(logger *zap.Logger, repo adapter.AccountRepo, cache adapter.A
 
 func (ab *AccountBiz) SignUp(name string, password string, way common.SignupWay, platform common.Platform) error {
 	ab.logger.Debug("[signup]: ", zap.String("name", name))
-	encrypt, _ := pwd.Encrypt(password)
 	return ab.repo.Create(&model.User{
-		UserName:  name,
-		Password:  encrypt,
+		Name:      name,
+		Password:  password,
 		SignupWay: way,
 	})
 }
@@ -45,21 +43,21 @@ func (ab *AccountBiz) SignIn(name string, pwd string) (string, error) {
 	return ab.SignToken(uid)
 }
 
-func (ab *AccountBiz) Authenticate(name string, p string) (uint, error) {
-	user, ok, err := ab.repo.Retrieve(name)
+func (ab *AccountBiz) Authenticate(name string, password string) (int64, error) {
+	doc, ok, err := ab.repo.Retrieve(name)
 	if err != nil {
 		return 0, err
 	}
 	if !ok {
 		return 0, errors.New("用户不存在")
 	}
-	if !pwd.Verify(p, user.Password) {
+	if !doc.Verify(password) {
 		return 0, errors.New("密码验证不通过")
 	}
-	return user.ID, nil
+	return doc.ID, nil
 }
 
-func (ab *AccountBiz) SignToken(uid uint) (string, error) {
+func (ab *AccountBiz) SignToken(uid int64) (string, error) {
 	return jwt.SignJwtToken(uid, ab.jwt)
 }
 

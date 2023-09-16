@@ -2,6 +2,7 @@ package xmongo
 
 import (
 	"context"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -61,4 +62,24 @@ func (i *InsertModel) Do() error {
 	}
 	_, err := i.col.InsertOne(i.ctx, i.docs[0], i.one...)
 	return err
+}
+
+func (i *InsertModel) Unique() int64 {
+	res := i.database.Collection("AutoInCID").FindOneAndUpdate(
+		i.ctx,
+		bson.M{"Col": i.col.Name()},
+		bson.M{"$inc": bson.M{"Unique": 1}},
+	)
+	if res.Err() != nil {
+		_, _ = i.database.Collection("AutoInCID").InsertOne(
+			i.ctx,
+			bson.M{"Col": i.col.Name(), "Unique": 1000001},
+		)
+		return 1000000
+	}
+	unique := struct {
+		Unique int64 `bson:"Unique"`
+	}{}
+	_ = res.Decode(&unique)
+	return unique.Unique
 }

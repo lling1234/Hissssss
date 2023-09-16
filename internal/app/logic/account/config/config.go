@@ -7,6 +7,7 @@ import (
 	"github.com/cd-home/Hissssss/internal/pkg/jwt"
 	"github.com/cd-home/Hissssss/internal/pkg/logger"
 	"github.com/cd-home/Hissssss/internal/pkg/xgorm"
+	"github.com/cd-home/Hissssss/internal/pkg/xmongo"
 )
 
 type Config struct {
@@ -19,5 +20,6 @@ type Config struct {
 		Redis  cache.Config  `yaml:"redis"`
 		Mysql  xgorm.Config  `yaml:"mysql"`
 		Jwt    jwt.Config    `yaml:"jwt"`
+		Mongo  xmongo.Config `yaml:"mongo"`
 	} `yaml:"spec"`
 }
