@@ -39,6 +39,8 @@ func (cb *ChatBiz) Push(ctx context.Context, req *chat.SendMessageRequest) (msgI
 		To:    req.To,
 		Body:  req.Body,
 		Type:  req.Type,
+		Sub:   req.Sub,
+		Op:    req.Op,
 	}
 	return msgId, cb.mq.Push(ctx, msg)
 }

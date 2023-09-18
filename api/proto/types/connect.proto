@@ -4,14 +4,15 @@ option go_package = "../pb/connect";
 import "common.proto";
 
 message Message {
-  int64 msgId = 1;               // 消息序号
+  int64 msgId = 1;             // 消息序号
   string server = 2;           // 服务器
   string room = 3;             // 房间号
   int64 from = 4;              // 发送者
   int64 to = 5;                // 接收者
-  string body = 6;              // 消息体
+  string body = 6;             // 消息体
   common.PushType type = 7;    // 发送类型
-  common.OP op = 8;            // 服务端通知类型
+  common.OP op = 8;            // 操作类型
+  common.Message sub = 9;      // 发送子类型
 }
 
 message MessageReply {}

@@ -5,6 +5,7 @@ import (
 	"github.com/cd-home/Hissssss/api/pb/account"
 	"github.com/cd-home/Hissssss/api/pb/api"
 	"github.com/cd-home/Hissssss/api/pb/chat"
+	"github.com/cd-home/Hissssss/api/pb/common"
 	"github.com/cd-home/Hissssss/internal/pkg/code"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
@@ -59,6 +60,8 @@ func (a *Api) SendMessage(ctx context.Context, req *api.SendMessageRequest) (*ap
 		Room: req.Room,
 		Body: req.Body,
 		Type: req.Type,
+		Op:   common.OP_REQ,
+		Sub:  common.Message_User,
 	})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "发送消息失败")

@@ -15,5 +15,5 @@ func New(mongo *xmongo.XMongo) adapter.JobRepo {
 }
 
 func (j *JobRepo) CreateOfflineMessage(msg *model.OfflineMessage) error {
-	return j.mongo.InsertModel("test", "offlineMessage").Multi(false).Doc(msg).Do()
+	return j.mongo.InsertModel("Message", "offlineMessage").Multi(false).Doc(msg).Do()
 }

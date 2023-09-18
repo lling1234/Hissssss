@@ -146,6 +146,7 @@ func (j *Job) Push(msg *chat.MessageToMQ) error {
 			To:     msg.To,
 			Body:   msg.Body,
 			Type:   msg.Type,
+			Sub:    msg.Sub,
 			Op:     common.OP_NOTIFY, // 服务端通知
 		}
 		switch msg.Type {

@@ -9,6 +9,8 @@ message SendMessageRequest {
   int64 room = 3;             // 房间接收
   string body = 4;            // 消息体
   common.PushType type = 5;   // 发送类型
+  common.Message sub = 6;     // 发送子类型
+  common.OP op = 7;           // 操作类型
 }
 
 message SendMessageReply {
@@ -27,4 +29,6 @@ message MessageToMQ {
   int64 to = 5;              // 接收者
   string body = 6;           // 消息体
   common.PushType type = 7;  // 发送类型
+  common.Message sub = 8;    // 发送子类型
+  common.OP op = 9;          // 操作类型
 }

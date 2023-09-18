@@ -9,6 +9,8 @@ message SendMessageRequest {
   int64 room = 3;                   // 房间接收
   string body = 4;                  // 消息体
   common.PushType type = 5;         // 发送类型
+  common.Message sub = 6;           // 发送子类型
+  common.OP op = 7;                 // 操作类型
 }
 
 message SendMessageReplyAck {

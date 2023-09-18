@@ -18,10 +18,12 @@ type Message struct {
 }
 
 type message struct {
-	MsgId int64     `json:"msgId"`
-	From  int64     `json:"from"`
-	Body  string    `json:"body"`
-	Op    common.OP `json:"op"`
+	MsgId int64           `json:"msgId"`
+	From  int64           `json:"from"`
+	Body  string          `json:"body"`
+	Op    common.OP       `json:"op"`
+	Sub   common.Message  `json:"sub"`
+	Type  common.PushType `json:"type"`
 }
 
 func NewMessage(logger *zap.Logger, connect *conn.Websocket) *Message {
@@ -43,6 +45,8 @@ func (m *Message) Push(ctx context.Context, req *connect.Message) (*connect.Mess
 	to.Body = req.Body
 	to.Op = req.Op
 	to.MsgId = req.MsgId
+	to.Sub = req.Sub
+	to.Type = req.Type
 	data, _ := json.Marshal(to)
 	switch req.Type {
 	case common.PushType_Single:
@@ -54,8 +58,7 @@ func (m *Message) Push(ctx context.Context, req *connect.Message) (*connect.Mess
 	case common.PushType_Broadcast:
 		b.BroadcastToAllChannel(data)
 	}
-	to.Body = ""
-	to.From = 0
+	to = &message{}
 	m.message.Put(to)
 	return &connect.MessageReply{}, nil
 }
