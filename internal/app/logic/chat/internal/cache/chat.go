@@ -3,16 +3,16 @@ package cache
 import (
 	"context"
 	"github.com/cd-home/Hissssss/internal/app/logic/chat/internal/adapter"
-	"github.com/redis/go-redis/v9"
+	"github.com/cd-home/Hissssss/internal/pkg/cache"
 	"go.uber.org/zap"
 )
 
 type ChatCache struct {
 	logger *zap.Logger
-	cache  *redis.Client
+	cache  *cache.Cache
 }
 
-func NewChatCache(logger *zap.Logger, cache *redis.Client) adapter.ChatCache {
+func NewChatCache(logger *zap.Logger, cache *cache.Cache) adapter.ChatCache {
 	return &ChatCache{
 		logger: logger,
 		cache:  cache,
@@ -20,9 +20,9 @@ func NewChatCache(logger *zap.Logger, cache *redis.Client) adapter.ChatCache {
 }
 
 func (c *ChatCache) GetServerByUID(key string) (string, error) {
-	return c.cache.Get(context.Background(), key).Result()
+	return c.cache.Get(context.Background(), key)
 }
 
 func (c *ChatCache) GetUserMessageID(key string) (int64, error) {
-	return c.cache.Incr(context.Background(), key).Result()
+	return 0, nil
 }

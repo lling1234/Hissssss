@@ -60,10 +60,10 @@ enum PushType {
 
 enum Message {
     UnKnown_8 = 0;
-    Push = 1;
-    Reply = 2;
-    HeartBeat = 3;
-    HeartBeatReply = 4;
+    HeartBeat = 1;
+    HeartBeatReply = 2;
+    System = 3;
+    User = 4;
 }
 
 enum OP {

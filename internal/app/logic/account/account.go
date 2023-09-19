@@ -12,7 +12,7 @@ import (
 	"github.com/cd-home/Hissssss/internal/pkg/logger"
 	"github.com/cd-home/Hissssss/internal/pkg/naming"
 	"github.com/cd-home/Hissssss/internal/pkg/tool/snowid"
-	"github.com/cd-home/Hissssss/internal/pkg/xgorm"
+	"github.com/cd-home/Hissssss/internal/pkg/xmongo"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
@@ -31,12 +31,12 @@ func main() {
 	}
 	app := fx.Module(
 		"Account",
-		fx.Supply(c, c.Spec.Node, c.Spec.Etcd, c.Spec.Logger, c.Spec.Redis, c.Spec.Mysql, c.Spec.Jwt),
+		fx.Supply(c, c.Spec.Node, c.Spec.Etcd, c.Spec.Logger, c.Spec.Redis, c.Spec.Mongo, c.Spec.Jwt),
 		fx.Supply(snow),
 		fx.Provide(logger.New),
 		fx.Provide(etcdv3.New),
-		fx.Provide(xgorm.New),
-		fx.Provide(cache.NewRedis),
+		fx.Provide(xmongo.New),
+		fx.Provide(cache.New),
 		fx.Provide(repo.NewAccountRepo),
 		fx.Provide(cacheBiz.NewAccountCache),
 		fx.Provide(biz.NewAccountBiz),
@@ -59,6 +59,7 @@ func init() {
 	vp.SetConfigName("account")
 	vp.AddConfigPath("etc")
 	vp.AddConfigPath("../etc")
+	vp.AddConfigPath("internal/app/logic/account/etc")
 	vp.SetEnvPrefix("ACCOUNT")
 	vp.AutomaticEnv()
 	if err = vp.ReadInConfig(); err != nil {

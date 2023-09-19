@@ -5,6 +5,7 @@ import (
 	"github.com/cd-home/Hissssss/api/pb/account"
 	"github.com/cd-home/Hissssss/api/pb/common"
 	"github.com/cd-home/Hissssss/internal/app/logic/account/internal/adapter"
+	"github.com/cd-home/Hissssss/internal/pkg/code"
 	"go.uber.org/zap"
 )
 
@@ -28,8 +29,8 @@ func (a *Account) SignUp(ctx context.Context, req *account.SignUpRequest) (*acco
 		return nil, err
 	}
 	return &account.SignUpReply{
-		Code:    200,
-		Message: "OK",
+		Code:    code.SignUpSuccess,
+		Message: code.Message[code.SignUpSuccess],
 	}, nil
 }
 
@@ -38,9 +39,9 @@ func (a *Account) SignIn(ctx context.Context, req *account.SignInRequest) (*acco
 	token, err := a.biz.SignIn(req.Username, req.Password)
 	if err != nil {
 		a.logger.Warn(err.Error())
-		return &account.SignInReply{Code: 500, Message: err.Error()}, nil
+		return nil, err
 	}
-	return &account.SignInReply{Code: 200, Message: "success", Token: token}, nil
+	return &account.SignInReply{Code: code.SignInSuccess, Message: code.Message[code.SignInSuccess], Token: token}, nil
 }
 
 // Connect 连接信息

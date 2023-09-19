@@ -7,6 +7,7 @@ import (
 	"github.com/cd-home/Hissssss/internal/pkg/etcdv3"
 	"github.com/cd-home/Hissssss/internal/pkg/logger"
 	"github.com/cd-home/Hissssss/internal/pkg/mq"
+	"github.com/cd-home/Hissssss/internal/pkg/xmongo"
 )
 
 type Config struct {
@@ -19,5 +20,6 @@ type Config struct {
 		Redis    cache.Config  `yaml:"redis"`
 		RabbitMQ mq.Config     `yaml:"rabbitmq"`
 		Queue    queue.Config  `yaml:"queue"`
+		Mongo    xmongo.Config `yaml:"mongo"`
 	} `yaml:"spec"`
 }

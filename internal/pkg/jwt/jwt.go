@@ -13,11 +13,11 @@ type Config struct {
 
 type CustomClaims struct {
 	// 额外的信息
-	uid uint
+	uid int64
 	jwt.RegisteredClaims
 }
 
-func SignJwtToken(uid uint, config Config) (string, error) {
+func SignJwtToken(uid int64, config Config) (string, error) {
 	claims := &CustomClaims{
 		RegisteredClaims: jwt.RegisteredClaims{
 			Issuer:    "Hissssss",

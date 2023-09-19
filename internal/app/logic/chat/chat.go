@@ -13,26 +13,33 @@ import (
 	"github.com/cd-home/Hissssss/internal/pkg/logger"
 	"github.com/cd-home/Hissssss/internal/pkg/mq"
 	"github.com/cd-home/Hissssss/internal/pkg/naming"
-	"github.com/cd-home/Hissssss/internal/pkg/xgorm"
+	"github.com/cd-home/Hissssss/internal/pkg/tool/snowid"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 	"go.uber.org/fx/fxevent"
 	"log"
+	"strconv"
 )
 
 var c config.Config
 
 func main() {
+	id, _ := strconv.ParseInt(c.Spec.Node.ID, 10, 64)
+	snow, err := snowid.New(id%30, id%10)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 	app := fx.Module(
 		"chat",
-		fx.Supply(c, c.Spec.Etcd, c.Spec.Logger, c.Spec.Redis, c.Spec.RabbitMQ, c.Spec.Queue, c.Spec.Mysql),
+		fx.Supply(c, c.Spec.Etcd, c.Spec.Logger, c.Spec.Redis, c.Spec.RabbitMQ, c.Spec.Queue),
+		fx.Supply(snow),
 		fx.Provide(logger.New),
-		fx.Provide(cache.NewRedis),
+		fx.Provide(cache.New),
 		fx.Provide(etcdv3.New),
 		fx.Provide(naming.New),
 		fx.Provide(chatMQ.NewRabbitMQ),
 		fx.Provide(mq.New),
-		fx.Provide(xgorm.New),
 		fx.Provide(repo.NewChatRepo),
 		fx.Provide(cacheBiz.NewChatCache),
 		fx.Provide(biz.NewChatBiz),

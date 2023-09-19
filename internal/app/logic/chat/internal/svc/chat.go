@@ -5,6 +5,7 @@ import (
 	"github.com/cd-home/Hissssss/api/pb/chat"
 	"github.com/cd-home/Hissssss/api/pb/common"
 	"github.com/cd-home/Hissssss/internal/app/logic/chat/internal/adapter"
+	"github.com/cd-home/Hissssss/internal/pkg/code"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -28,11 +29,11 @@ func (c *Chat) Push(ctx context.Context, req *chat.SendMessageRequest) (*chat.Se
 	msgId, err := c.biz.Push(ctx, req)
 	if err != nil {
 		c.logger.Error(err.Error())
-		return nil, status.Errorf(codes.Unimplemented, "发送错误")
+		return nil, code.Rsp(code.InternalError)
 	}
 	return &chat.SendMessageReply{
-		Code:  200,
-		Msg:   "OK",
+		Code:  code.Success,
+		Msg:   code.Message[code.Success],
 		MsgId: msgId,
 		Op:    common.OP_ACK,
 	}, nil
@@ -41,6 +42,7 @@ func (c *Chat) Push(ctx context.Context, req *chat.SendMessageRequest) (*chat.Se
 func (c *Chat) PushRoom(ctx context.Context, req *chat.SendMessageRequest) (*chat.SendMessageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PushRoom not implemented")
 }
+
 func (c *Chat) Broadcast(ctx context.Context, req *chat.SendMessageRequest) (*chat.SendMessageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Broadcast not implemented")
 }

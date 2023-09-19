@@ -5,6 +5,8 @@ import (
 	"github.com/cd-home/Hissssss/api/pb/account"
 	"github.com/cd-home/Hissssss/api/pb/api"
 	"github.com/cd-home/Hissssss/api/pb/chat"
+	"github.com/cd-home/Hissssss/api/pb/common"
+	"github.com/cd-home/Hissssss/internal/pkg/code"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -31,8 +33,9 @@ func (a *Api) SignUp(ctx context.Context, req *api.SignUpRequest) (*api.SignUpRe
 		Password: req.Password,
 	})
 	if err != nil {
-		a.logger.Error("signup err", zap.Error(err))
-		return &api.SignUpReply{Code: 500, Message: "注册失败, 请重试."}, nil
+		codex, message := code.From(err)
+		a.logger.Error("signup err", zap.Int64("code", codex), zap.String("message", message))
+		return &api.SignUpReply{Code: codex, Message: message}, nil
 	}
 	return &api.SignUpReply{Code: reply.Code, Message: reply.Message}, nil
 }
@@ -43,7 +46,9 @@ func (a *Api) SignIn(ctx context.Context, req *api.SignInRequest) (*api.SignInRe
 		Password: req.Password,
 	})
 	if err != nil {
-		return &api.SignInReply{Code: 500, Message: err.Error()}, nil
+		codex, message := code.From(err)
+		a.logger.Error("signin err", zap.Int64("code", codex), zap.String("message", message))
+		return &api.SignInReply{Code: codex, Message: message}, nil
 	}
 	return &api.SignInReply{Token: reply.Token, Message: reply.Message, Code: reply.Code}, nil
 }
@@ -55,6 +60,8 @@ func (a *Api) SendMessage(ctx context.Context, req *api.SendMessageRequest) (*ap
 		Room: req.Room,
 		Body: req.Body,
 		Type: req.Type,
+		Op:   common.OP_REQ,
+		Sub:  common.Message_User,
 	})
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "发送消息失败")
@@ -63,6 +70,26 @@ func (a *Api) SendMessage(ctx context.Context, req *api.SendMessageRequest) (*ap
 		Code:  ack.Code,
 		Msg:   ack.Msg,
 		MsgId: ack.MsgId,
-		Op:    ack.Op,
+		Op:    ack.Op, // TODO 普通API调用不需要 回复 OP
+	}, nil
+}
+
+func (a *Api) AckMessage(ctx context.Context, req *api.AckMessageReqeust) (*api.AckMessageReplyAck, error) {
+	_, err := a.chat.Push(ctx, &chat.SendMessageRequest{
+		From: 1000,
+		To:   req.From,
+		Type: common.PushType_Single,
+		Op:   common.OP_ACK,
+		Sub:  common.Message_System,
+	})
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "发送消息失败")
+	}
+	return &api.AckMessageReplyAck{
+		From:  req.From,
+		To:    req.To,
+		MsgId: req.MsgId,
+		Op:    common.OP_ACK,
+		Sub:   common.Message_System,
 	}, nil
 }
