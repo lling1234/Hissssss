@@ -70,6 +70,26 @@ func (a *Api) SendMessage(ctx context.Context, req *api.SendMessageRequest) (*ap
 		Code:  ack.Code,
 		Msg:   ack.Msg,
 		MsgId: ack.MsgId,
-		Op:    ack.Op,
+		Op:    ack.Op, // TODO 普通API调用不需要 回复 OP
+	}, nil
+}
+
+func (a *Api) AckMessage(ctx context.Context, req *api.AckMessageReqeust) (*api.AckMessageReplyAck, error) {
+	_, err := a.chat.Push(ctx, &chat.SendMessageRequest{
+		From: 1000,
+		To:   req.From,
+		Type: common.PushType_Single,
+		Op:   common.OP_ACK,
+		Sub:  common.Message_System,
+	})
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "发送消息失败")
+	}
+	return &api.AckMessageReplyAck{
+		From:  req.From,
+		To:    req.To,
+		MsgId: req.MsgId,
+		Op:    common.OP_ACK,
+		Sub:   common.Message_System,
 	}, nil
 }

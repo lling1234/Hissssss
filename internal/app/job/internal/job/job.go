@@ -137,6 +137,8 @@ func (j *Job) Push(msg *chat.MessageToMQ) error {
 			Receive:  false,
 		})
 	}
+	// 写入全量消息表
+	// 系统消息写入全量系统消息表
 	c, ok := j.connect[msg.Server]
 	if ok {
 		push := &connectx.Message{
@@ -145,9 +147,9 @@ func (j *Job) Push(msg *chat.MessageToMQ) error {
 			From:   msg.From,
 			To:     msg.To,
 			Body:   msg.Body,
-			Type:   msg.Type,
-			Sub:    msg.Sub,
-			Op:     common.OP_NOTIFY, // 服务端通知
+			Type:   msg.Type, // 单聊、群聊、广播
+			Sub:    msg.Sub,  // 用户消息, 系统消息
+			Op:     msg.Op,   // 服务端通知
 		}
 		switch msg.Type {
 		case common.PushType_Single:

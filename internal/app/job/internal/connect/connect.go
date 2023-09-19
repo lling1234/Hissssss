@@ -76,6 +76,8 @@ func (c *Connect) Dispatch(pushCh chan *connect.Message, roomCh chan *connect.Me
 				To:     singleMsg.To,
 				Body:   singleMsg.Body,
 				Type:   singleMsg.Type,
+				Op:     singleMsg.Op,
+				Sub:    singleMsg.Sub,
 			})
 			if err != nil {
 				return
